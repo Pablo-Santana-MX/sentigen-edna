@@ -1,0 +1,6 @@
+{
+  "name": "Sentigen eDNA SaaS",
+  "description": "B2B RegTech platform for in-silico environmental impact audits and pathogen eDNA monitoring for US EPA/NEPA and Canadian DFO compliance.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
