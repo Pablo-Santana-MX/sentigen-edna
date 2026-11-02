@@ -1,14 +1,42 @@
-# Sentigen eDNA: In-Silico RegTech SaaS Platform
+# 🧬 Sentigen eDNA: In-Silico RegTech SaaS Platform
+
+![Build Status](https://img.shields.io/badge/build-passing-brightgreen)
+![Python Version](https://img.shields.io/badge/python-3.11%2B-blue)
+![React Version](https://img.shields.io/badge/react-18-61dafb?logo=react&logoColor=white)
+![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=flat&logo=fastapi)
+![License](https://img.shields.io/badge/license-Proprietary-red)
 
 Sentigen eDNA is an enterprise Regulatory Technology (RegTech) SaaS platform providing automated **in-silico environmental impact audits** and **pathogen monitoring (eDNA)** for aquaculture farms and coastal developments in the United States (EPA / NEPA) and Canada (DFO).
 
+## Table of Contents
+- [Business Model & Zero-Cost Data Architecture](#business-model--zero-cost-data-architecture)
+- [Key Features](#key-features)
+- [Technology Stack](#technology-stack)
+- [Repository Directory Tree](#repository-directory-tree)
+- [Local Setup & Installation](#local-setup--installation)
+- [API Reference](#api-reference)
+- [Deployment](#deployment)
+
 ## Business Model & Zero-Cost Data Architecture
 
-Sentigen operates entirely **in-silico via secondary data mining**. By eliminating expensive physical field sampling and wet-lab sequencing runs, Sentigen connects asynchronously to public sequence archives (such as NCBI SRA E-utilities, GenBank, and ENCODE) to download metadata and environmental DNA sequences **100% free of charge**, processing them through local Qdrant vector databases and Google Gemini generative models to produce instant regulatory compliance reports.
+Sentigen operates entirely **in-silico via secondary data mining**. By eliminating expensive physical field sampling and wet-lab sequencing runs, Sentigen connects asynchronously to public sequence archives (such as NCBI SRA E-utilities, GenBank, and ENCODE). 
 
----
+It downloads metadata and environmental DNA sequences **100% free of charge**, processing them through local Qdrant vector databases and Google Gemini generative models to produce instant regulatory compliance reports.
 
-## Repository Directory Tree (Monorepo)
+## Key Features
+
+- **Automated Biovigilance:** Real-time tracking of pathogen incidence and regional outbreak distribution.
+- **Zero-Cost Ingestor:** Direct pipeline to NCBI E-utilities for rapid metadata retrieval.
+- **AI Audit Engine:** Powered by Google Gemini to parse genomic data and generate EPA/DFO compliant PDF reports.
+- **Glassmorphism UI:** Modern, responsive dashboard with automatic light/dark mode and fluid micro-interactions.
+
+## Technology Stack
+
+- **Backend (Python 3.11+)**: FastAPI, `httpx` for asynchronous NCBI SRA / E-utilities requests, Pydantic v2, Qdrant vector database (RAG), and `@google/genai` (Gemini AI API).
+- **Frontend (React 18 / Vite)**: Tailwind CSS v4, Recharts for biometric and outbreak trends, Lucide React icons.
+- **Infrastructure**: Docker & Docker Compose for monorepo orchestration, pre-configured for Vercel and AWS deployment.
+
+## Repository Directory Tree
 
 ```text
 sentigen-edna-monorepo/
@@ -43,16 +71,6 @@ sentigen-edna-monorepo/
             └── SampleTracker.tsx
 ```
 
----
-
-## Technology Stack
-
-- **Backend (Python 3.11+)**: FastAPI, `httpx` for asynchronous NCBI SRA / E-utilities requests, Pydantic v2, Qdrant vector database (RAG), and `@google/genai` (Gemini AI API).
-- **Frontend (React 18 / Vite)**: Tailwind CSS v4 with automatic Light/Dark mode support, Recharts for biometric and outbreak trends, Lucide React icons.
-- **Infrastructure**: Docker & Docker Compose for monorepo orchestration, pre-configured for Vercel and AWS deployment.
-
----
-
 ## Local Setup & Installation
 
 ### Prerequisites
@@ -61,14 +79,17 @@ sentigen-edna-monorepo/
 - Docker & Docker Compose
 
 ### 1. Clone & Configure Environment
+
 ```bash
-git clone https://github.com/sentigen/edna-regtech-saas.git
+git clone [https://github.com/sentigen/edna-regtech-saas.git](https://github.com/sentigen/edna-regtech-saas.git)
 cd sentigen-edna-monorepo
 cp .env.example .env
 ```
-*(Configure your `GEMINI_API_KEY` in `.env` or via AI Studio Secrets)*
+> **Note:** Configure your `GEMINI_API_KEY` in the `.env` file or via your deployment provider's secrets manager.
 
 ### 2. Run with Docker Compose (Full Stack)
+
+For an out-of-the-box local environment containing both the backend and frontend:
 ```bash
 docker-compose up --build
 ```
@@ -89,22 +110,27 @@ npm install
 npm run dev
 ```
 
----
+## API Reference
 
-## API Endpoints (`/api/v1`)
+Base URL: `/api/v1`
 
-- `GET /api/v1/health` — System status and database connectivity check.
-- `POST /api/v1/fetch` — Asynchronous NCBI SRA eDNA ingestor querying public repositories for target species / pathogen signatures.
-- `POST /api/v1/gemini-audit` — AI-powered regulatory compliance audit generator (EPA/NEPA & DFO frameworks).
-- `GET /api/v1/surveillance` — Real-time pathogen incidence and regional outbreak distribution metrics.
+| Method | Endpoint | Description |
+| :--- | :--- | :--- |
+| `GET` | `/health` | System status and database connectivity check. |
+| `POST` | `/fetch` | Asynchronous NCBI SRA eDNA ingestor querying public repositories. |
+| `POST` | `/gemini-audit` | AI-powered regulatory compliance audit generator (EPA/NEPA & DFO). |
+| `GET` | `/surveillance` | Real-time pathogen incidence and regional outbreak distribution metrics. |
 
----
+## Deployment
 
-## Vercel Deployment
+### Vercel (Frontend)
 
 The frontend is fully optimized for Vercel static deployment:
 1. Push your repository to GitHub.
-2. Import project into Vercel.
-3. Set root directory to `frontend/`.
-4. Add environment variables (`GEMINI_API_KEY`).
+2. Import the project into Vercel.
+3. Set the **Root Directory** to `frontend/`.
+4. Add environment variables (e.g., `VITE_API_BASE_URL`).
 5. Deploy.
+
+---
+*© 2026 Sentigen eDNA. All rights reserved.*
